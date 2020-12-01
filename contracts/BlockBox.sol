@@ -13,7 +13,6 @@ contract BlockBox is Pausable, Ownable, ReentrancyGuard {
     uint256 public fileCount = 0;
     uint256 public freeCount = 1;
     mapping(uint256 => File) public files;
-    mapping(address => uint256) public uploads;
     mapping(string => address) public hashAddress;
     mapping(address => uint256) public balances;
 
@@ -44,7 +43,11 @@ contract BlockBox is Pausable, Ownable, ReentrancyGuard {
     //Constructor
     constructor() public Pausable() Ownable() ReentrancyGuard() {}
 
-    // Functions
+    // Fallback Function
+    fallback() external payable {
+        uint256 currBalance = balances[msg.sender];
+        balances[msg.sender] = currBalance.add(msg.value);
+    }
 
     // //Fallback Function
     // function() external {}
@@ -78,9 +81,6 @@ contract BlockBox is Pausable, Ownable, ReentrancyGuard {
 
         hashAddress[_fileHash] = msg.sender;
 
-        uint256 currValue = uploads[msg.sender];
-        uploads[msg.sender] = currValue.add(1);
-
         files[fileCount] = File(
             fileCount,
             msg.sender,
@@ -103,14 +103,25 @@ contract BlockBox is Pausable, Ownable, ReentrancyGuard {
     }
 
     function payHash(string memory _hash) public payable whenNotPaused() {
+        require(bytes(_hash).length > 0);
+        require(msg.sender != address(0));
+
         address uploader = hashAddress[_hash];
         uint256 currBalance = balances[uploader];
         balances[uploader] = currBalance.add(msg.value);
     }
 
-    function withdraw(uint256 _amount) external whenNotPaused() nonReentrant() {
-        require(balances[msg.sender] >= _amount, "Not Enough Balance");
+    function withdraw(uint256 _amount)
+        external
+        payable
+        whenNotPaused()
+        nonReentrant()
+    {
+        require(msg.sender != address(0));
+        require(balances[msg.sender] > _amount, "Not Enough Balance");
+
         msg.sender.transfer(_amount);
-        SafeMath.sub(_amount, balances[msg.sender]);
+        balances[msg.sender] = SafeMath.sub(balances[msg.sender], _amount);
     }
+    
 }

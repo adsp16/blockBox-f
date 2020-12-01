@@ -7,9 +7,43 @@ chai.use(chaiAsPromised).should();
 
 contract("BlockBox", ([caller]) => {
   let blockBoxContract;
+  let blockAddress;
+  const testAmount = web3.utils.toWei("1", "ether");
+
+  let response;
+  let fileId;
+  const fileSize = 100;
+  const fileHash = "4c87acc07afaaaeb888a414e0da2d2665";
+  const fileType = "fileExtention";
+  const fileName = "fileName.mp4";
+  const withdrawAmount = web3.utils.toWei("1.2", "ether");
 
   before(async () => {
-    blockBoxContract = await BlockBox.deployed();
+    try {
+      blockBoxContract = await BlockBox.deployed();
+      blockAddress = blockBoxContract.address;
+      response = await blockBoxContract.uploadFile(
+        fileHash,
+        fileType,
+        fileSize,
+        fileName,
+        { from: caller }
+      );
+      fileId = await blockBoxContract.fileCount();
+
+      await blockBoxContract.payHash(fileHash, {
+        from: caller,
+        value: testAmount,
+      });
+
+      web3.eth.sendTransaction({
+        from: caller,
+        to: blockAddress,
+        value: testAmount,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   });
 
   describe("Check Deployment ", () => {
@@ -33,27 +67,6 @@ contract("BlockBox", ([caller]) => {
   });
 
   describe("Check Files", () => {
-    let response;
-    let fileId;
-
-    const fileSize = 100;
-    const fileHash =
-      "4c87acc07afaaaeb888a414e0da2d2665ee9b39518ae1c5859e92f35ddcbe483";
-    const fileType = "fileExtention";
-    const fileName = "fileName.mp4";
-    const fileMessage = "fileDescription";
-
-    before(async () => {
-      response = await blockBoxContract.uploadFile(
-        fileHash,
-        fileType,
-        fileSize,
-        fileName,
-        { from: caller }
-      );
-      fileId = await blockBoxContract.fileCount();
-    });
-
     //Event
     it("Should correctly upload a file", async () => {
       const uploadedEvent = response.logs[0].args;
@@ -127,5 +140,36 @@ contract("BlockBox", ([caller]) => {
       assert.equal(file.fileName, fileName, "Name is stored correctly");
       assert.equal(file.uploader, caller, "Caller is stored correctly");
     });
-  }); // Describe Files
+  });
+
+  describe("Payment & Withdrawals", () => {
+    const testBalance = web3.utils.toWei("2", "ether");
+
+    it("balance is updated for a sender with fallback", async () => {
+      const balance = await blockBoxContract.balances(caller);
+
+      assert.equal(
+        balance.toString(),
+        testBalance,
+        "Returns correct balance for an address"
+      );
+    });
+
+    it("Should pay a hash", async () => {
+      const hashAdd = await blockBoxContract.hashAddress(fileHash);
+      const hashBalance = await blockBoxContract.balances(hashAdd);
+      assert.equal(hashAdd, caller, "Hash address is equal");
+      assert.equal(
+        hashBalance.toString(),
+        testBalance,
+        "Hash balance updated + incremented"
+      );
+    });
+
+    it("Should Withdraw Funds", async () => {
+      await blockBoxContract.withdraw(withdrawAmount, { from: caller });
+      const balance = await blockBoxContract.balances(caller);
+      assert.equal(balance.toString(), web3.utils.toWei("0.8", "ether"));
+    });
+  });
 }); // Contract

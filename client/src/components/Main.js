@@ -30,8 +30,6 @@ const Main = ({
 }) => {
   const [hash, setHash] = useState();
 
-  console.log(files);
-
   return (
     <div className="my-5">
       <Row>
