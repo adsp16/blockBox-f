@@ -15,12 +15,13 @@ const App = () => {
   const [blockBoxJS, setblockBoxJS] = useState(null);
   const [w3, setw3] = useState();
   const [files, setFiles] = useState([]);
-  const [balance, setBalance] = useState(null);
+  const [balance, setBalance] = useState(0.0);
   const [message, setMessage] = useState();
   const [uploadedFile, setUploadedFile] = useState(null);
   const [fileLink, setFileLink] = useState("");
   const [success, setSuccess] = useState("");
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState();
 
   const coffeePrice = "1.2";
 
@@ -163,6 +164,20 @@ const App = () => {
       });
   };
 
+  const withdrawFunds = (amount) => {
+    if (amount) {
+      const amountInWei = w3.utils.toWei(amount.toString());
+      console.log(amountInWei);
+      blockBoxJS.methods
+        .withdraw(amountInWei)
+        .send({ from: account.account })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   const copyToClip = () => {
     navigator.clipboard.writeText(fileLink);
     setShow(true);
@@ -173,9 +188,24 @@ const App = () => {
     setShow(false);
   };
 
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <React.Fragment>
-      <Navigation account={account} balance={balance} />
+      <Navigation
+        account={account}
+        balance={balance}
+        showModal={showModal}
+        closeModal={closeModal}
+        openModal={handleOpenModal}
+        withdrawFunds={withdrawFunds}
+      />
       <Container>
         <Main
           getFile={getFile}
