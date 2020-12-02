@@ -37,7 +37,7 @@ Get started on http://localhost:3000/
 Start by installing node modules for backend/contract code
 
 ```sh
-$ cd npm install
+$ npm install
 ```
 
 Change directory to client-side code
