@@ -30,11 +30,11 @@ Block Box is a file transfer interface that uploads files to the 🌎 Inter Plan
     ├── migrations              # Deployer Functions
     └── test                    # Automated tests (alternatively `spec` or `tests`)
 
-### 🚀‍ Development
+### 🚀‍ Installation
 
-et Started on http://localhost:3000/
+Get started on http://localhost:3000/
 
-#Start by installing node modules for backend/contract code
+Start by installing node modules for backend/contract code
 
 ```sh
 $ cd npm install
@@ -62,7 +62,7 @@ Compile and migrate the contract to you local chain by running :
 $ truffle migrate --reset
 ```
 
-#Start 🚀‍ development server on localhost
+Start 🚀‍ development server on localhost
 
 ```sh
 /topleveldirectory/client
