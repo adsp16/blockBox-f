@@ -1,0 +1,30 @@
+{
+  "name": "blockbox",
+  "version": "1.0.0",
+  "description": "Block Box is a file transfer interface that uploads files to the 🌎 Inter Planetary File System 🌎 and stores hash data on the blockchain and gives users the tools to share and track uploads. It also allows downloaders to buy the uploaders a coffee for their data sharing efforts.",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.3.0",
+    "@truffle/hdwallet-provider": "^1.2.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adsp16/blockBoxTwo.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/adsp16/blockBoxTwo/issues"
+  },
+  "homepage": "https://github.com/adsp16/blockBoxTwo#readme"
+}
