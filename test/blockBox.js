@@ -145,16 +145,6 @@ contract("BlockBox", ([caller]) => {
   describe("Payment & Withdrawals", () => {
     const testBalance = web3.utils.toWei("2", "ether");
 
-    it("balance is updated for a sender with fallback", async () => {
-      const balance = await blockBoxContract.balances(caller);
-
-      assert.equal(
-        balance.toString(),
-        testBalance,
-        "Returns correct balance for an address"
-      );
-    });
-
     it("Should pay a hash", async () => {
       const hashAdd = await blockBoxContract.hashAddress(fileHash);
       const hashBalance = await blockBoxContract.balances(hashAdd);
