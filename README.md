@@ -1,4 +1,4 @@
-# 🚀 BlockBox
+## 🚀 BlockBox
 
 Block Box is a file transfer interface that uploads files to the 🌎 Inter Planetary File System 🌎 and stores hash data on the blockchain and gives users the tools to share and track uploads. It also allows downloaders to buy the uploaders a coffee for their data sharing efforts.
 
