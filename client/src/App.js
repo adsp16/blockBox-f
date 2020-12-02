@@ -29,14 +29,6 @@ const App = () => {
     loadWeb3();
   }, []);
 
-  useEffect(() => {
-    console.log(files);
-  }, [files]);
-
-  useEffect(() => {
-    console.log(uploadedFile);
-  }, [uploadedFile]);
-
   const loadWeb3 = async () => {
     try {
       const web3 = await getWeb3();
@@ -51,17 +43,14 @@ const App = () => {
       const blockBox = await getBlockBox(web3);
       setblockBoxJS(blockBox);
       const fileCount = await blockBox.methods.fileCount().call();
-      console.log(fileCount);
 
       for (let i = 1; i <= fileCount; i++) {
         const file = await blockBox.methods.files(i).call();
-        console.log(file + "Fuck You");
         setFiles((prevState) => [...prevState, file]);
       }
 
       const balance = await blockBox.methods.balances(accounts[0]).call();
       const ethBal = web3.utils.fromWei(balance, "ether");
-      console.log(balance);
       setBalance(ethBal);
     } catch (err) {
       console.log(err);
@@ -73,10 +62,7 @@ const App = () => {
     e.preventDefault();
     const file = e.target.files[0];
 
-    console.log(file);
-
     const reader = new window.FileReader();
-    console.log(file);
 
     reader.readAsArrayBuffer(file);
     reader.onloadend = () => {
@@ -102,10 +88,7 @@ const App = () => {
     ipfs
       .add(uploadedFile.buffer)
       .then((result) => {
-        console.log("IPFS Result", result);
-
         if (option === "Get Link") {
-          console.log(`${ipfsUrl}${result.path}`);
           setFileLink(`${ipfsUrl}${result.path}`);
         }
 
@@ -156,7 +139,6 @@ const App = () => {
       })
       .then((result) => {
         alert("Coffee Sent");
-        console.log(result);
       })
       .catch((err) => {
         alert("Transaction Failed");
@@ -171,9 +153,7 @@ const App = () => {
       blockBoxJS.methods
         .withdraw(amountInWei)
         .send({ from: account.account })
-        .then((result) => {
-          console.log(result);
-        })
+        .then((result) => {})
         .catch((err) => console.log(err));
     }
   };

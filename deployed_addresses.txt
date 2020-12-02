@@ -1,0 +1,74 @@
+This has been deployed to the ropsten network. 
+
+Testnet : Ropsten 
+Contract address 0xf1a9D38B2aEC83CF557FB048639522047d0DAE23 
+
+
+deployment logs 
+
+Starting migrations...
+======================
+> Network name:    'ropsten'
+> Network id:      3
+> Block gas limit: 8000000 (0x7a1200)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x087e61023f7797a89d4776a45da1d3507897f959ea7619f364e898dee440343d
+   > Blocks: 2            Seconds: 64
+   > contract address:    0xf1a9D38B2aEC83CF557FB048639522047d0DAE23
+   > block number:        9177973
+   > block timestamp:     1606844176
+   > account:             0x251a39deB6238fB0357FfB34497c94bDF23d74CA
+   > balance:             0.99671242
+   > gas used:            164379 (0x2821b)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00328758 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 9177974)
+   > confirmation number: 2 (block: 9177975)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00328758 ETH
+
+
+2_deploy_contracts.js
+=====================
+
+   Deploying 'BlockBox'
+   --------------------
+   > transaction hash:    0x46c9c651fe45de03ad503c181e266083ba8891b20b5cb32e26eaf4c66f608eea
+   > Blocks: 2            Seconds: 48
+   > contract address:    0xD9c3f8cE672F9EE9b133c7DaD576A21916982c4d
+   > block number:        9177979
+   > block timestamp:     1606844319
+   > account:             0x251a39deB6238fB0357FfB34497c94bDF23d74CA
+   > balance:             0.95664098
+   > gas used:            1961231 (0x1ded0f)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03922462 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 9177982)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.03922462 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.0425122 ETH
