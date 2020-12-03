@@ -56,7 +56,7 @@ $ npm install
 
 Spin up a local blockchain on port 7545 (e.g. using [Ganache](https://www.trufflesuite.com/ganache))
 
-Compile and migrate the contract to you local chain by running :
+Compile and migrate the contract to your local chain by running :
 
 ```sh
 $ truffle migrate --reset
@@ -65,7 +65,7 @@ $ truffle migrate --reset
 Start 🚀‍ development server on localhost
 
 ```sh
-/topleveldirectory/client
+ cd /client
 $ npm start
 ```
 
