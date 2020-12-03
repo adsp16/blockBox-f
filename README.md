@@ -65,7 +65,7 @@ $ truffle migrate --reset
 Start 🚀‍ development server on localhost
 
 ```sh
- cd /client
+ cd client
 $ npm start
 ```
 
